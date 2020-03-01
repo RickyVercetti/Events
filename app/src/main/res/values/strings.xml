@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tareas</string>
+    <string name="crear_evento">Crear Evento</string>
+    <string name="lista_de_tareas_vacias">Lista de tareas vacias</string>
+    <string name="a_ade_un_nombre_a_la_tarea">Añade un nombre a la tarea:</string>
+    <string name="a_adir">Añadir</string>
+    <string name="introduce_la_fecha">Introduce la fecha:</string>
+    <string name="aniadir">Añadir</string>
+</resources>
