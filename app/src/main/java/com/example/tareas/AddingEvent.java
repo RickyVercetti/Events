@@ -7,47 +7,71 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Logger;
 
 public class AddingEvent extends Activity {
+
+
+    private LocalDate daySelected;
+    private LocalDate today;
+    private static final Logger LOG = Logger.getLogger(AddingEvent.class.getName());
+
+    private EditText text;
+    private CalendarView date;
+    private Button buttonCreateEvent;
+
+    public AddingEvent(){
+        daySelected = LocalDate.now();
+        today = LocalDate.now();
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.adding_event);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        text = (EditText) findViewById(R.id.inputText);
+        date = (CalendarView) findViewById(R.id.inputDate);
+        buttonCreateEvent = (Button) findViewById(R.id.buttonCreateEvent);
+
+        date.setDate(new Date().getTime());
         addListenerOnButtonCreateEvent();
+        date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+            daySelected = LocalDate.of(year,month+1,dayOfMonth);
+            today = LocalDate.now();
+            }
+        });
     }
+
 
     private void addListenerOnButtonCreateEvent() {
 
         final Context context = this;
-        Button buttonCreateEvent = (Button) findViewById(R.id.buttonCreateEvent);
+
         buttonCreateEvent.setOnClickListener(new View.OnClickListener() {
 
-            TextInputEditText text = (TextInputEditText) findViewById(R.id.inputText);
-            CalendarView date = (CalendarView) findViewById(R.id.inputDate);
+
             @Override
             public void onClick(View v) {
 
                 String inputText = text.getText().toString();
-                long inputDate = date.getDate();
-                Calendar calendarInputDate = Calendar.getInstance();
-                calendarInputDate.setTimeInMillis(inputDate);
-                Calendar today = Calendar.getInstance();
-                System.out.println("calendarInputDate: "+ calendarInputDate + ", today: "+ today);
-
 
                 if (inputText.isEmpty()){
                     Toast.makeText(context,"Debes introducir un nombre.",Toast.LENGTH_LONG).show();
                 }else{
-                    //Long today = new Date().getTime();
-                    //int compare = Long.compare(today,inputDate);
-                    System.out.println("inputDate: "+ inputDate + ", hoy: "+ today);
-                    if (calendarInputDate.after(today)){
+
+                    LOG.info("\ndaySelected: "+ daySelected + ",\ntoday: "+ today);
+                    if (daySelected.isAfter(today)){
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
                     }else{
