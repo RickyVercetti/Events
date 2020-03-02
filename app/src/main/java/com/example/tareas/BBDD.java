@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteStatement;
 
 public class BBDD extends SQLiteOpenHelper {
 
-    String sqlCreate = "CREATE TABLE EVENTOS (nombre TEXT, fecha LONG )";
+    String sqlCreate = "CREATE TABLE EVENTOS (nombre TEXT, fecha TEXT )";
 
     public BBDD(Context contexto, String nombre, SQLiteDatabase.CursorFactory factory, int version)
     {
@@ -17,7 +17,7 @@ public class BBDD extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(sqlCreate);
-        if (db == null)
+        /*if (db == null)
         {
             db.execSQL("INSERT INTO EVENTOS (nombre,fecha) VALUES ('Hola y Adios', 997362986)");
             //db.execSQL("INSERT INTO EVENTOS (nombre,fecha) VALUES ('Ricardo','30','01-02-2017')");
@@ -25,11 +25,13 @@ public class BBDD extends SQLiteOpenHelper {
         SQLiteStatement sql = db.compileStatement("SELECT * FROM BBDD.EVENTOS");
         sql.execute();
         System.out.println(sql.toString());
+
+         */
     }
 
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionNueva)
     {
-        db.execSQL("DROP TABLE IF EXISTS puntuaciones");
+        db.execSQL("DROP TABLE IF EXISTS EVENTOS");
         db.execSQL(sqlCreate);
     }
 

@@ -3,6 +3,7 @@ package com.example.tareas;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -72,8 +73,16 @@ public class AddingEvent extends Activity {
 
                     LOG.info("\ndaySelected: "+ daySelected + ",\ntoday: "+ today);
                     if (daySelected.isAfter(today)){
+
+                        BBDD bd = new BBDD(getApplicationContext(),"Eventos", null, 1);
+                        SQLiteDatabase db = bd.getWritableDatabase();
+                        String sql = "INSERT INTO EVENTOS (nombre,fecha) VALUES ('"+inputText+"','"+daySelected.toString()+"');";
+                        db.execSQL(sql);
+                        db.close();
+
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
+
                     }else{
                         Toast.makeText(context,"Debes introducir una fecha posterior a hoy.",Toast.LENGTH_LONG).show();
                     }
