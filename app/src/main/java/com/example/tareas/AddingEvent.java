@@ -74,7 +74,7 @@ public class AddingEvent extends Activity {
                     LOG.info("\ndaySelected: "+ daySelected + ",\ntoday: "+ today);
                     if (daySelected.isAfter(today)){
 
-                        BBDD bd = new BBDD(getApplicationContext(),"Eventos", null, 1);
+                        BBDD bd = new BBDD(getApplicationContext(),"EVENTOS", null, 1);
                         SQLiteDatabase db = bd.getWritableDatabase();
                         String sql = "INSERT INTO EVENTOS (nombre,fecha) VALUES ('"+inputText+"','"+daySelected.toString()+"');";
                         db.execSQL(sql);
