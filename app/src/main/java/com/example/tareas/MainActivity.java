@@ -8,30 +8,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class MainActivity extends Activity {
 
-    private String name;
-    private String dateString;
-    private LocalDate date;
-    private LocalDate today;
-    private View v;
     private static final Logger LOG = Logger.getLogger(AddingEvent.class.getName());
-    //private Context context;
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
     private List<Event> eventList;
@@ -39,18 +25,17 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        today = LocalDate.now();
         addListenerOnButtonCreate();
         Cursor c = showOnDataBase();
-        v = findViewById(android.R.id.content).getRootView();
         emptyList = findViewById(R.id.emptyList);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        eventList = new ArrayList<Event>();
+        eventList = new ArrayList<>();
         recyclerView = findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,6 +53,7 @@ public class MainActivity extends Activity {
     }
 
     protected Cursor showOnDataBase(){
+
         BBDD bd = new BBDD(getApplicationContext(),"EVENTOS", null, 1);
         SQLiteDatabase db = bd.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM EVENTOS ORDER BY FECHA ASC;",null);
@@ -85,11 +71,9 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-
     }
+
     public void onBackPressed() {
         this.finish();
     }
-
-
 }

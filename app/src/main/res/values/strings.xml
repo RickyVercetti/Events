@@ -6,4 +6,7 @@
     <string name="a_adir">Añadir</string>
     <string name="introduce_la_fecha">Introduce la fecha:</string>
     <string name="aniadir">Añadir</string>
+    <string name="info1">Falta</string>
+    <string name="info2">dias</string>
+    <string name="info3">para</string>
 </resources>

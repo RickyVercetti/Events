@@ -10,22 +10,15 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.material.textfield.TextInputEditText;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
 
 public class AddingEvent extends Activity {
 
-
+    private static final Logger LOG = Logger.getLogger(AddingEvent.class.getName());
     private LocalDate daySelected;
     private LocalDate today;
-    private static final Logger LOG = Logger.getLogger(AddingEvent.class.getName());
-
     private EditText text;
     private CalendarView date;
     private Button buttonCreateEvent;
@@ -39,9 +32,9 @@ public class AddingEvent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.adding_event);
 
-        text = (EditText) findViewById(R.id.inputText);
-        date = (CalendarView) findViewById(R.id.inputDate);
-        buttonCreateEvent = (Button) findViewById(R.id.buttonCreateEvent);
+        text = findViewById(R.id.inputText);
+        date = findViewById(R.id.inputDate);
+        buttonCreateEvent = findViewById(R.id.buttonCreateEvent);
 
         date.setDate(new Date().getTime());
         addListenerOnButtonCreateEvent();
@@ -88,12 +81,6 @@ public class AddingEvent extends Activity {
                     }
 
                 }
-                /*
-                Date conversorFechaSeleccionada = new Date(inputDate * 1000);
-                Date hoy = new Date();
-                long diff = hoy.getTime() - conversorFechaSeleccionada.getTime();
-                int i = (int) diff;
-                */
            }
         });
     }
