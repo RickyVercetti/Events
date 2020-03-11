@@ -10,14 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
 
     private Context context;
     private List<Event> eventList = new ArrayList<>();
+    private static final Logger LOG = Logger.getLogger(EventAdapter.class.getName());
 
     public EventAdapter(Context context, List<Event> eventList) {
         this.context = context;
@@ -39,7 +44,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         Event event = eventList.get(i);
         //holder.textViewName.setText("Faltan "+eventList.get(i).getDate() + "para " + eventList.get(i).getName());
         holder.textViewName.setText(eventList.get(i).getName());
-        holder.textViewDate.setText(eventList.get(i).getDate());
+        LocalDate today = LocalDate.now();
+        String dateString = eventList.get(i).getDate();
+        LocalDate date = LocalDate.parse(dateString);
+        long diff = DAYS.between(today,date);
+        int days = ((int) diff);
+        LOG.info(String.valueOf(days));
+        //holder.textViewDate.setText(eventList.get(i).getDate());
+        holder.textViewDate.setText(String.valueOf(days));
     }
 
 
