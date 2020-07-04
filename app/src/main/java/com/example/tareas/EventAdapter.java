@@ -1,6 +1,8 @@
 package com.example.tareas;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,34 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.layout_recycler,null);
+        view.setOnLongClickListener(new View.OnLongClickListener(){
+
+
+            @Override
+            public boolean onLongClick(View v) {
+
+                //TODO mostrar un mensaje si desea borrar y confirmar o cancelar
+                AlertDialog confirm = new AlertDialog.Builder(context)
+                        .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                LOG.info("\nConfirmación de borrado\n");
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setTitle("Confirmar")
+                        .setMessage("¿Deseas eliminar el evento?")
+                        .create();
+                confirm.show();
+                return true;
+            }
+
+            });
         MyViewHolder mvh = new MyViewHolder(view);
         return mvh;
     }
@@ -44,6 +74,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         long diff = DAYS.between(today,date);
         int days = ((int) diff);
         holder.textViewDate.setText(String.valueOf(days));
+
     }
 
     @Override
